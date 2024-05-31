@@ -1,16 +1,12 @@
 {
-  "name": "imdb-movie-ratings",
+  "name": "express-puppeteer-vercel",
   "version": "1.0.0",
-  "description": "A simple Express.js application to search for IMDb movie ratings using Puppeteer.",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "dependencies": {
     "express": "^4.17.1",
-    "puppeteer": "^13.1.0"
+    "puppeteer": "^10.2.0"
   },
-  "engines": {
-    "node": ">=14.0.0"
+  "scripts": {
+    "start": "node index.js"
   }
 }
