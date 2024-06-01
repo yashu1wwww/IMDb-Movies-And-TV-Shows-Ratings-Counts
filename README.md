@@ -16,6 +16,8 @@ and run node index.js
 
 then open localhost:3000
 
+# Feel Free To Fork and host....
+
 ---------------------------------------------------------------------------------------------------------------
 
 ![Image Description](https://github.com/yashu1wwww/IMDb-Movies-TV-Shows-Ratings-Counts/blob/main/1.png)
