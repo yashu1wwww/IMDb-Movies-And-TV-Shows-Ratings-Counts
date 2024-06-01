@@ -1,13 +1,12 @@
 {
-  "name": "imdb-ratings-app",
+  "name": "imdb-ratings-scraper",
   "version": "1.0.0",
-  "description": "An application to fetch and display IMDb ratings using Puppeteer and Express.js",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.17.2",
-    "puppeteer": "^13.3.0"
+    "express": "^4.17.1",
+    "puppeteer": "^13.0.0"
   }
 }
