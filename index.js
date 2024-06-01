@@ -18,11 +18,18 @@ app.get('/', (req, res) => {
                         align-items: center;
                         height: 100vh;
                         margin: 0;
+                        background-image: url('https://wallpaperaccess.com/full/1567770.gif');
+                        background-size: cover;
+                        background-position: center;
+                        color: white;
                     }
                     form {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        background-color: rgba(0 0 0 / 27%);
+                        padding: 20px;
+                        border-radius: 8px;
                     }
                     input[type="text"] {
                         padding: 8px;
@@ -30,6 +37,8 @@ app.get('/', (req, res) => {
                         width: 300px;
                         border: 1px solid #ccc;
                         border-radius: 4px;
+                        background-color: rgba(255, 255, 255, 0.8);
+                        color: #333;
                     }
                     button {
                         padding: 8px 16px;
@@ -44,14 +53,17 @@ app.get('/', (req, res) => {
                     }
                     .result-container {
                         text-align: center;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
                     }
                 </style>
                 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
             </head>
             <body>
                 <form action="/search" method="get" class="space-y-2">
-                    <label for="query" class="text-lg font-semibold">Imdb Movie Ratings</label>
-                    <input type="text" id="query" name="query" required placeholder="movie name or movie name with ratings" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
+                    <label for="query" class="text-lg font-semibold">IMDb Movie Ratings</label>
+                    <input type="text" id="query" name="query" required placeholder="Movie name or movie name with ratings" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
                 </form>
                 <div id="result" class="result-container"></div> <!-- This is where the screenshot will be displayed -->
@@ -89,11 +101,47 @@ app.get('/search', async (req, res) => {
         // Send HTML response with the image embedded and a "Search Again" button
         res.send(`
             <html>
+                <style>
+                    body {
+                        font-family: 'Arial', sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        margin: 0;
+                        background-image: url('https://wallpaperaccess.com/full/1567770.gif');
+                        background-size: cover;
+                        background-position: center;
+                        color: white;
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                    .result-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        padding: 20px;
+                        border-radius: 8px;
+                    }
+                    button {
+                        padding: 8px 16px;
+                        background-color: #007bff;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    button:hover {
+                        background-color: #0056b3;
+                    }
+                </style>
                 <body>
                     <div class="result-container">
                         <h2>IMDb Ratings</h2>
                         <img src="${imageSrc}" alt="IMDb Ratings">
                         <form action="/" method="get">
+						<br>
                             <button type="submit">Search Again</button>
                         </form>
                     </div>
@@ -109,4 +157,3 @@ app.get('/search', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
