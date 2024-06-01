@@ -12,5 +12,6 @@
       "src": "/.*",
       "dest": "/index.js"
     }
-  ]
+  ],
+  // Comments are turned off in this JSON configuration
 }
