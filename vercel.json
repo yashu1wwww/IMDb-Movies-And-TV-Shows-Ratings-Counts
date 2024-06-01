@@ -1,5 +1,5 @@
 {
-  "name": "imdb-ratings-app",
+  "version": 2,
   "builds": [
     {
       "src": "index.js",
@@ -7,7 +7,9 @@
     }
   ],
   "routes": [
-    { "src": "/", "dest": "index.js" },
-    { "src": "/search", "dest": "index.js" }
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
   ]
 }
