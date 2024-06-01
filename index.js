@@ -2,6 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 
 const app = express();
+const port = 3000;
 
 // Serve the HTML form for the search box
 app.get('/', (req, res) => {
@@ -67,9 +68,7 @@ app.get('/search', async (req, res) => {
         return;
     }
 
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     const encodedQuery = encodeURIComponent(query);
@@ -107,5 +106,7 @@ app.get('/search', async (req, res) => {
     }
 });
 
-// Export the app for Vercel
-module.exports = app;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
+
