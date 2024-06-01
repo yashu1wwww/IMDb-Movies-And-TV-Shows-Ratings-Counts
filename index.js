@@ -1,17 +1,18 @@
 const express = require('express');
+const puppeteer = require('puppeteer');
 const chromium = require('chrome-aws-lambda');
-const puppeteer = require('puppeteer-core');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 app.get('/', (req, res) => {
     res.send(`
         <html>
             <head>
-                <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
-                <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
+			 <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
+      <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
                 <style>
+                    /* CSS Styles */
                     body {
                         font-family: 'Arial', sans-serif;
                         display: flex;
@@ -58,46 +59,45 @@ app.get('/', (req, res) => {
                         flex-direction: column;
                         align-items: center;
                     }
-                    .container {
-                        text-align: center;
-                        background-color: #8cafe76b;
-                        padding: 20px;
-                        border-radius: 63px;
-                    }
+					.container {
+                text-align: center;
+                background-color: #8cafe76b;
+                padding: 20px;
+                border-radius: 63px;
+            }
                 </style>
                 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
             </head>
             <body>
                 <form action="/search" method="get" class="space-y-2">
-                    <div style="text-align: center;">
-                        <label for="query" class="text-lg font-bold" style="color: black; text-decoration: underline;">IMDB MOVIES & TV SHOWS RATINGS COUNT</label>
-                        <br>
-                        <br>
-                        <div style="text-align: center;">
-                            <label for="query" class="text-lg font-bold" style="color: #813333e0;">VISITORS COUNT</label>
-                            <br>
-                            <a href="https://www.hitwebcounter.com" target="_blank">
-                                <img src="https://hitwebcounter.com/counter/counter.php?page=12946004&amp;style=0006&amp;nbdigits=4&amp;type=page&amp;initCount=1000" title="Counter Widget" alt="Visit counter For Websites" border="0">
-                            </a>
-                            <br>
-                            <div class="container" style="margin-top: 20px; text-align: center;">
-                                <button style="background-color: #00000000; padding: 10px 20px; margin-right: 1px;">
-                                    <a href="https://yashwanthwebproject.netlify.app" style="color: black; text-decoration: none; font-size: 18px; font-weight: bold; display: block; background-color: inherit; border: 2px solid white; border-radius: 5px; padding: 5px;">
-                                        Web Development Projects
-                                    </a>
-                                </button>
-                            </div>
-                            <br>
-                            <input type="text" id="query" name="query" required placeholder="Movie name or movie name with ratings" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
-                            <br>
-                            <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
-                        </div>
-                    </div>
-                </form>
+   <div style="text-align: center;">
+  <label for="query" class="text-lg font-bold" style="color: black; text-decoration: underline;">IMDB MOVIES & TV SHOWS RATINGS COUNT</label>
+  <br>
+  <br>
+  <div style="text-align: center;">
+  <label for="query" class="text-lg font-bold" style="color: #813333e0;">VISITORS COUNT</label>
+  <br>
+    <a href="https://www.hitwebcounter.com" target="_blank">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=12946004&amp;style=0006&amp;nbdigits=4&amp;type=page&amp;initCount=1000" title="Counter Widget" alt="Visit counter For Websites" border="0">
+    </a>
+  <br>
+					<div class="container" style="margin-top: 20px; text-align: center;">
+  <button style="background-color: #00000000; padding: 10px 20px; margin-right: 1px;">
+    <a href="https://yashwanthwebproject.netlify.app" style="color: black; text-decoration: none; font-size: 18px; font-weight: bold; display: block; background-color: inherit; border: 2px solid white; border-radius: 5px; padding: 5px;">
+      Web Development Projects
+    </a>
+  </button>
+</div>
+<br>
+                    <input type="text" id="query" name="query" required placeholder="Movie name or movie name with ratings" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
+					<br>
+					<button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
+				</form>
                 <div id="result" class="result-container"></div> <!-- This is where the screenshot will be displayed -->
-                <br>
-                <span class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">© ® Developed By Yashwanth R</span>
-            </body>
+				<br>
+				<span class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">© ® Developed By Yashwanth R</span>
+</div>
+			</body>
         </html>
     `);
 });
@@ -109,12 +109,7 @@ app.get('/search', async (req, res) => {
         return;
     }
 
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        executablePath: await chromium.executablePath,
-        headless: chromium.headless,
-    });
-
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     const encodedQuery = encodeURIComponent(query);
@@ -124,6 +119,7 @@ app.get('/search', async (req, res) => {
 
     const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
     if (imdbRatingsLink) {
+
         const screenshot = await imdbRatingsLink.screenshot();
         await browser.close();
 
@@ -132,8 +128,8 @@ app.get('/search', async (req, res) => {
 
         res.send(`
             <html>
-                <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
-                <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
+			<title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
+      <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
                 <style>
                     body {
                         font-family: 'Arial', sans-serif;
@@ -174,7 +170,7 @@ app.get('/search', async (req, res) => {
                         <h2>IMDb Ratings</h2>
                         <img src="${imageSrc}" alt="IMDb Ratings">
                         <form action="/" method="get">
-                            <br>
+						<br>
                             <button type="submit">Search Again</button>
                         </form>
                     </div>
@@ -187,6 +183,7 @@ app.get('/search', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
+
+app.listen(3000, () => {
     console.log(`Server running on port ${port}`);
 });
