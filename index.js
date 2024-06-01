@@ -4,7 +4,6 @@ const puppeteer = require('puppeteer');
 const app = express();
 const port = 3000;
 
-// Serve the HTML form for the search box
 app.get('/', (req, res) => {
     res.send(`
         <html>
@@ -72,7 +71,6 @@ app.get('/', (req, res) => {
     `);
 });
 
-// Handle the form submission and perform the search
 app.get('/search', async (req, res) => {
     const query = req.query.query;
     if (!query) {
@@ -88,17 +86,15 @@ app.get('/search', async (req, res) => {
 
     await page.goto(url, { waitUntil: 'networkidle2' });
 
-    // Capture screenshot of the IMDb ratings section
     const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
     if (imdbRatingsLink) {
-        // Capture screenshot of the IMDb ratings link
+
         const screenshot = await imdbRatingsLink.screenshot();
         await browser.close();
 
         const imageBase64 = screenshot.toString('base64');
         const imageSrc = `data:image/png;base64,${imageBase64}`;
 
-        // Send HTML response with the image embedded and a "Search Again" button
         res.send(`
             <html>
                 <style>
