@@ -69,17 +69,20 @@ app.get('/', (req, res) => {
             </head>
             <body>
                 <form action="/search" method="get" class="space-y-2">
-   <div style="text-align: center;">
-  <label for="query" class="text-lg font-bold" style="color: black; text-decoration: underline;">IMDB MOVIES & TV SHOWS RATINGS COUNT</label>
+<div style="text-align: center;">
+    <img src="https://e7.pngegg.com/pngimages/705/448/png-clipart-logo-imdb-film-logan-lerman-miscellaneous-celebrities-thumbnail.png" alt="IMDB Icon" style="height: 20px; width: 45px; display: inline-block;">
+    <label for="query" class="text-lg font-bold" style="color: black; text-decoration: underline; font-size: 14px; display: inline-block; vertical-align: middle;">MOVIES & TV SHOWS RATINGS COUNT</label>
   <br>
   <br>
-  <div style="text-align: center;">
+ <div style="text-align: center;">
   <label for="query" class="text-lg font-bold" style="color: #813333e0;">VISITORS COUNT</label>
   <br>
-    <a href="https://www.hitwebcounter.com" target="_blank">
-      <img src="https://hitwebcounter.com/counter/counter.php?page=12946004&amp;style=0006&amp;nbdigits=4&amp;type=page&amp;initCount=1000" title="Counter Widget" alt="Visit counter For Websites" border="0">
-    </a>
   <br>
+  <a href="https://www.hitwebcounter.com" target="_blank" style="display: inline-block;">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=12946004&amp;style=0006&amp;nbdigits=4&amp;type=page&amp;initCount=1000" title="Counter Widget" alt="Visit counter For Websites" border="0">
+  </a>
+  <br>
+</div>
 					<div class="container" style="margin-top: 20px; text-align: center;">
   <button style="background-color: #00000000; padding: 10px 20px; margin-right: 1px;">
     <a href="https://yashwanthwebproject.netlify.app" style="color: black; text-decoration: none; font-size: 18px; font-weight: bold; display: block; background-color: inherit; border: 2px solid white; border-radius: 5px; padding: 5px;">
@@ -94,7 +97,7 @@ app.get('/', (req, res) => {
 				</form>
                 <div id="result" class="result-container"></div> <!-- This is where the screenshot will be displayed -->
 				<br>
-				<span class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">© ® Developed By Yashwanth R</span>
+				<span class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:bg-green-600">© ® Developed By Yashwanth R</span>
 </div>
 			</body>
         </html>
