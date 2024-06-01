@@ -1,5 +1,6 @@
 const express = require('express');
-const puppeteer = require('puppeteer');
+const chromium = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -108,7 +109,12 @@ app.get('/search', async (req, res) => {
         return;
     }
 
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    const browser = await puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
+    });
+
     const page = await browser.newPage();
 
     const encodedQuery = encodeURIComponent(query);
