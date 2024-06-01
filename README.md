@@ -1,6 +1,8 @@
 # imdb-live-movies-rating
 
-IMDb Movies TV Shows Ratings Counts,Just Enter Movie Name or Tv Show 
+IMDb Movies TV Shows Ratings Counts, Using Google Search web scraping techniques
+
+Just Enter Movie Name or Tv Show 
 
 # Ex: War or war ratings
 
