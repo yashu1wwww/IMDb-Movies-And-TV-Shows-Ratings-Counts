@@ -4,7 +4,9 @@ IMDb Movies TV Shows Ratings Counts,Just Enter Movie Name or Tv Show
 
 # Ex: War or war ratings
 
-install node.js download my code to folder and
+install node.js &
+
+download my code to folder and
 
 run
 
