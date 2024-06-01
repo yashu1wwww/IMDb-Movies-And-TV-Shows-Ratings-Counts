@@ -1,6 +1,5 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
-const chromium = require('chrome-aws-lambda');
 
 const app = express();
 const port = 3000;
