@@ -1,6 +1,6 @@
 [build]
-  functions = "src/functions"
-  publish = "src/public"
+  functions = "s/src/functions"
+  publish = "s/src/public"
 
 [[redirects]]
   from = "/*"
