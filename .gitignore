@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+
+# Netlify functions
+src/functions/node_modules
+
+# Puppeteer cache
+puppeteer_cache
+
+# VS Code settings
+.vscode/
