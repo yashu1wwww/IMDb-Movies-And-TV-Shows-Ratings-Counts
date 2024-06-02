@@ -1,18 +1,16 @@
 {
-  "name": "my-express-app",
+  "name": "imdb-ratings-app",
   "version": "1.0.0",
-  "description": "An application to fetch IMDb ratings using Puppeteer",
-  "main": "src/functions/search.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "netlify dev",
-    "build": "echo 'No build steps required'"
+    "start": "node index.js"
   },
   "dependencies": {
-    "puppeteer": "^19.2.2"
+    "express": "^4.17.1",
+    "puppeteer": "^11.0.0"
   },
-  "devDependencies": {
-    "netlify-cli": "^12.6.0"
-  },
+  "devDependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC"
