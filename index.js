@@ -1,8 +1,26 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
+const NodeCache = require('node-cache');
 
 const app = express();
 const port = 3000;
+
+const searchCache = new NodeCache({ stdTTL: 600 });
+
+let browser;
+
+(async () => {
+    browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--disable-gpu'
+        ]
+    });
+})();
 
 app.get('/', (req, res) => {
     res.send(`
@@ -18,7 +36,6 @@ app.get('/', (req, res) => {
                     html, body {
                         overflow: hidden;
                     }
-                    /* CSS Styles */
                     body {
                         font-family: 'Arial', sans-serif;
                         display: flex;
@@ -35,7 +52,7 @@ app.get('/', (req, res) => {
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        background-color: rgba(225 168 168 / 16%);
+                        background-color: rgba(225, 168, 168, 0.16);
                         padding: 83px;
                         border-radius: 39px;
                     }
@@ -102,9 +119,9 @@ app.get('/', (req, res) => {
                         <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
                     </div>
                 </form>
-                <div id="result" class="result-container"></div> <!-- This is where the screenshot will be displayed -->
+                <div id="result" class="result-container"></div>
                 <br>
-             <span class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:bg-green-600">© ® Developed By Yashwanth R</span>
+                <span class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:bg-green-600">© ® Developed By Yashwanth R</span>
             </body>
         </html>
     `);
@@ -117,87 +134,100 @@ app.get('/search', async (req, res) => {
         return;
     }
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    const cachedResult = searchCache.get(query);
+    if (cachedResult) {
+        return res.send(cachedResult);
+    }
 
-    const encodedQuery = encodeURIComponent(query);
-    const url = `https://www.google.com/search?q=${encodedQuery}`;
+    try {
+        const page = await browser.newPage();
 
-    await page.goto(url, { waitUntil: 'networkidle2' });
+        const encodedQuery = encodeURIComponent(query);
+        const url = `https://www.google.com/search?q=${encodedQuery}`;
 
-    const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
-    if (imdbRatingsLink) {
-        const screenshot = await imdbRatingsLink.screenshot();
-        await browser.close();
+        await page.goto(url, { waitUntil: 'domcontentloaded' });
 
-        const imageBase64 = screenshot.toString('base64');
-        const imageSrc = `data:image/png;base64,${imageBase64}`;
+        const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
+        if (imdbRatingsLink) {
+            const screenshot = await imdbRatingsLink.screenshot();
+            await page.close();
 
-        res.send(`
-            <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
-                    <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
-					<style>
-                        html, body {
-                            overflow: hidden;
-                        }
-                        body {
-                            font-family: 'Arial', sans-serif;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            height: 100vh;
-                            margin: 0;
-                            background-image: url('https://wallpaperaccess.com/full/1567770.gif');
-                            background-size: cover;
-                            background-position: center;
-                            color: white;
-                            flex-direction: column;
-                            text-align: center;
-                        }
-                        .result-container {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            background-color: rgba(0, 0, 0, 0.5);
-                            padding: 20px;
-                            border-radius: 8px;
-                        }
-                        button {
-                            padding: 8px 16px;
-                            background-color: #007bff;
-                            color: white;
-                            border: none;
-                            border-radius: 4px;
-                            cursor: pointer;
-                        }
-                        button:hover {
-                            background-color: #0056b3;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="result-container">
-                        <h2>IMDb Ratings</h2>
-                        <img src="${imageSrc}" alt="IMDb Ratings">
-                        <form action="/" method="get">
-                            <br>
-                            <button type="submit">Search Again</button>
-                        </form>
-                    </div>
-                </body>
-            </html>
-        `);
-    } else {
-        await browser.close();
-        res.status(500).send('Valid Search Only Acceptable');
+            const imageBase64 = screenshot.toString('base64');
+            const imageSrc = `data:image/png;base64,${imageBase64}`;
+
+            const resultHtml = `
+                <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
+                        <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
+                        <style>
+                            html, body {
+                                overflow: hidden;
+                            }
+                            body {
+                                font-family: 'Arial', sans-serif;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                                margin: 0;
+                                background-image: url('https://wallpaperaccess.com/full/1567770.gif');
+                                background-size: cover;
+                                background-position: center;
+                                color: white;
+                                flex-direction: column;
+                                text-align: center;
+                            }
+                            .result-container {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                background-color: rgba(0, 0, 0, 0.5);
+                                padding: 20px;
+                                border-radius: 8px;
+                            }
+                            button {
+                                padding: 8px 16px;
+                                background-color: #007bff;
+                                color: white;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                            }
+                            button:hover {
+                                background-color: #0056b3;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="result-container">
+                            <h2>IMDb Ratings</h2>
+                            <img src="${imageSrc}" alt="IMDb Ratings">
+                            <form action="/" method="get">
+                                <br>
+                                <button type="submit">Search Again</button>
+                            </form>
+                        </div>
+                    </body>
+                </html>
+            `;
+
+            searchCache.set(query, resultHtml);
+
+            res.send(resultHtml);
+        } else {
+            await page.close();
+            res.status(500).send('Valid Search Only Acceptable');
+        }
+    } catch (error) {
+        console.error('Error during search:', error);
+        res.status(500).send('An error occurred while processing your request.');
     }
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
