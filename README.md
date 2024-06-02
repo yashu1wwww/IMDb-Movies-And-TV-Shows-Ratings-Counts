@@ -8,6 +8,16 @@ Just Enter Movie Name or Tv Show
 
 Breaking Bad Or Breaking Bad Ratings
 
+# Once the ratings for a movie or TV show appear,
+
+you can change the text in the URL for another search.
+
+# For example, in the URL 
+
+https://imdb-movies-and-tvshows-ratings-counts.onrender.com/search?query=RRR,
+
+change "RRR" to the name of another movie.
+
 
 # Search Here:
 
