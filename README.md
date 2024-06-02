@@ -1,4 +1,4 @@
-# imdb-live-movies-rating
+# IMDb-Movies-And-TV-Shows-Ratings-Counts
 
 IMDb Movies TV Shows Ratings Counts, Using Google Search web scraping techniques
 
