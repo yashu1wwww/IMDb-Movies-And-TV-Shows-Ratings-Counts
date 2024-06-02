@@ -13,7 +13,8 @@
   "description": "A web application to search and display IMDb movie ratings using Puppeteer and Express.",
   "dependencies": {
     "express": "^4.17.1",
-    "puppeteer": "^10.0.0"
+    "puppeteer-core": "^10.0.0",
+    "chrome-aws-lambda": "^10.0.0"
   },
   "engines": {
     "node": ">=14.0.0"
