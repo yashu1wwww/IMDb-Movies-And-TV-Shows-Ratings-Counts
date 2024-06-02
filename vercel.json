@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "src/functions/*.js", "use": "@vercel/node" },
+    { "src": "src/public/*", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/src/functions/$1.js" },
+    { "src": "/(.*)", "dest": "/src/public/$1" }
+  ],
+  "env": {
+    "ORG_ID": "team_47wqyEH6ro3A9cj4OFKJgAAI",
+    "PROJECT_ID": "prj_FpHrqJlL96tTvqpPLy2kQ0YGDeN0"
+  }
+}
