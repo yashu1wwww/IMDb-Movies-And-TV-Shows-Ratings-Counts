@@ -1,22 +1,17 @@
 {
-  "name": "imdb-ratings-search",
+  "name": "imdb-ratings-app",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "build": "node index.js"
+    "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "A web application to search and display IMDb movie ratings using Puppeteer and Express.",
   "dependencies": {
     "express": "^4.17.1",
-    "puppeteer-core": "^10.0.0",
-    "chrome-aws-lambda": "^10.0.0"
+    "puppeteer": "^11.0.0"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  }
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
