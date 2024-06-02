@@ -4,6 +4,11 @@ IMDb Movies TV Shows Ratings Counts, Using Google Search web scraping techniques
 
 Just Enter Movie Name or Tv Show 
 
+# Ex: War Or War Ratings 
+
+Breaking Bad Or Breaking Bad Ratings
+
+
 # Search Here:
 
 https://imdb-movies-and-tvshows-ratings-counts.onrender.com
