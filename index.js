@@ -2,7 +2,7 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     res.send(`
@@ -111,27 +111,30 @@ app.get('/search', async (req, res) => {
         return;
     }
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    let browser;
+    try {
+        browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true // Ensuring it runs in headless mode
+        });
+        const page = await browser.newPage();
 
-    const encodedQuery = encodeURIComponent(query);
-    const url = `https://www.google.com/search?q=${encodedQuery}`;
+        const encodedQuery = encodeURIComponent(query);
+        const url = `https://www.google.com/search?q=${encodedQuery}`;
 
-    await page.goto(url, { waitUntil: 'networkidle2' });
+        await page.goto(url, { waitUntil: 'networkidle2' });
 
-    const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
-    if (imdbRatingsLink) {
+        const imdbRatingsLink = await page.$('a[href*="imdb.com"]');
+        if (imdbRatingsLink) {
 
-        const screenshot = await imdbRatingsLink.screenshot();
-        await browser.close();
+            const screenshot = await imdbRatingsLink.screenshot();
+            const imageBase64 = screenshot.toString('base64');
+            const imageSrc = `data:image/png;base64,${imageBase64}`;
 
-        const imageBase64 = screenshot.toString('base64');
-        const imageSrc = `data:image/png;base64,${imageBase64}`;
-
-        res.send(`
-            <html>
-			<title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
-      <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
+            res.send(`
+                <html>
+                <title>IMDB MOVIES & TV SHOWS RATINGS COUNT</title>
+                <link rel="icon" href="https://m.media-amazon.com/images/G/01/imdb/images-ANDW73HA/favicon_desktop_32x32._CB1582158068_.png" type="image/x-icon">
                 <style>
                     body {
                         font-family: 'Arial', sans-serif;
@@ -172,20 +175,26 @@ app.get('/search', async (req, res) => {
                         <h2>IMDb Ratings</h2>
                         <img src="${imageSrc}" alt="IMDb Ratings">
                         <form action="/" method="get">
-						<br>
+                            <br>
                             <button type="submit">Search Again</button>
                         </form>
                     </div>
                 </body>
-            </html>
-        `);
-    } else {
-        await browser.close();
-        res.status(500).send('Valid Search Only Acceptable');
+                </html>
+            `);
+        } else {
+            res.status(500).send('Valid Search Only Acceptable');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        if (browser) {
+            await browser.close();
+        }
     }
 });
 
-
 app.listen(port, () => {
-console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
 });
