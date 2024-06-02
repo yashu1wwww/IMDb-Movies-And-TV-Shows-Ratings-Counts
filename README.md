@@ -6,7 +6,7 @@ Just Enter Movie Name or Tv Show
 
 # Search Here:
 
-https://imdb-movies-tv-shows-ratings-counts.onrender.com
+https://imdb-movies-and-tvshows-ratings-counts.onrender.com
 
 if you want to run on your system
 
