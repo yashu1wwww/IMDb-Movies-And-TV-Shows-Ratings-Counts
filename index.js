@@ -88,6 +88,11 @@ app.get('/', (req, res) => {
                         padding: 0px;
                         border-radius: 63px;
                     }
+					h4 {
+                    text-align: center;
+                    color: black;
+                    font-weight: bold;
+                    }
                 </style>
                 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
             </head>
@@ -121,6 +126,8 @@ app.get('/', (req, res) => {
                 </form>
                 <div id="result" class="result-container"></div>
                 <br>
+				<h4>"𝐑𝐚𝐭𝐢𝐧𝐠𝐬 𝐰𝐢𝐥𝐥 𝐚𝐩𝐩𝐞𝐚𝐫 𝐰𝐢𝐭𝐡𝐢𝐧 𝟏𝟎 𝐬𝐞𝐜𝐨𝐧𝐝𝐬"</h4>
+				<br>
                 <span class="px-4 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:bg-green-600">© ® Developed By Yashwanth R</span>
             </body>
         </html>
