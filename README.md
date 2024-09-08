@@ -4,6 +4,10 @@ IMDb Movies TV Shows Ratings Counts, Using Google Search web scraping techniques
 
 # Since Imdb doesn't provide an API key, so used Google's displayed text to fetch and display the output
 
+# Search Here:
+
+https://imdb-movies-and-tvshows-ratings-counts.onrender.com
+
 Just Enter Movie Name or Tv Show 
 
 # Ex: War Or War Ratings 
@@ -17,24 +21,6 @@ Breaking Bad Or Breaking Bad Ratings
 https://imdb-movies-and-tvshows-ratings-counts.onrender.com/search?query=RRR,
 
 change "RRR" to the name of another movie.
-
-# Search Here:
-
-https://imdb-movies-and-tvshows-ratings-counts.onrender.com
-
-if you want to run on your system
-
-install node.js &
-
-download my code to folder and
-
-run
-
-npm install express puppeteer
-
-and run node index.js
-
-then open localhost:3000
 
 # Feel Free To Fork the code for better improvement..
 
