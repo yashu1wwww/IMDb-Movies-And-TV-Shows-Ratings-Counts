@@ -119,7 +119,7 @@ app.get('/', (req, res) => {
                             </button>
                         </div>
                         <br>
-                        <input type="text" id="query" name="query" required placeholder="Movie name or movie name with ratings" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
+                        <input type="text" id="query" name="query" required placeholder="Ex:Godzilla Or Godzilla 2014" class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-blue-400 focus:ring-blue-400">
                         <br>
                         <button type="submit" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Search</button>
                     </div>
