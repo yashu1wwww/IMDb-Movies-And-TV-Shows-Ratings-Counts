@@ -10,9 +10,7 @@ https://imdb-movies-and-tvshows-ratings-counts.onrender.com
 
 Just Enter Movie Name or Tv Show 
 
-# Ex: War Or War Ratings 
-
-Breaking Bad Or Breaking Bad Ratings
+# Ex: Gozdilla or Godzilla 2014 
 
 # you can change the text in the URL for another search.
 
